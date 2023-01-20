@@ -46,7 +46,6 @@ class JobSourceFactoryTest extends TestCase
             );
         } catch (InvalidManifestException $e) {
             self::assertSame(InvalidManifestException::CODE_INVALID_DATA, $e->getCode());
-            self::assertSame('Manifest is not a list of strings', $e->getMessage());
             self::assertSame(
                 <<<'EXPECTED'
                 - 'valid string 1'

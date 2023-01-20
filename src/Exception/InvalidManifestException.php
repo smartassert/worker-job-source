@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SmartAssert\WorkerJobSource\Exception;
 
+use SmartAssert\WorkerJobSource\Model\Manifest;
 use Symfony\Component\Yaml\Exception\ParseException;
 
 class InvalidManifestException extends \Exception
@@ -25,7 +26,7 @@ class InvalidManifestException extends \Exception
     {
         return new InvalidManifestException(
             $content,
-            'Manifest content is not valid yaml',
+            Manifest::FILENAME . ' content is not valid yaml.',
             self::CODE_INVALID_YAML,
             $parseException
         );
@@ -35,7 +36,7 @@ class InvalidManifestException extends \Exception
     {
         return new InvalidManifestException(
             $content,
-            'Manifest is not a list of strings',
+            Manifest::FILENAME . ' is not a list of strings.',
             self::CODE_INVALID_DATA
         );
     }
@@ -44,7 +45,7 @@ class InvalidManifestException extends \Exception
     {
         return new InvalidManifestException(
             '',
-            'Manifest is empty',
+            Manifest::FILENAME . ' is empty.',
             self::CODE_EMPTY
         );
     }
