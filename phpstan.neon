@@ -4,3 +4,7 @@ parameters:
     - src
     - tests
   inferPrivatePropertyTypeFromConstructor: true
+  ignoreErrors:
+    -
+      message: "#^Parameter \\#1 \\$manifestPaths of method .+\\:\\:createFromManifestPathsAndSources\\(\\) expects array\\<non\\-empty\\-string\\>, .+ given\\.$#"
+      path: tests/Unit/Factory/JobSourceFactoryTest.php
