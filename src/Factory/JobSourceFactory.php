@@ -7,7 +7,7 @@ namespace SmartAssert\WorkerJobSource\Factory;
 use SmartAssert\WorkerJobSource\Exception\InvalidManifestException;
 use SmartAssert\WorkerJobSource\Model\JobSource;
 use SmartAssert\WorkerJobSource\Model\Manifest;
-use SmartAssert\YamlFile\Collection\ArrayCollection;
+use SmartAssert\YamlFile\Collection\MutableProviderInterface;
 use SmartAssert\YamlFile\Collection\ProviderInterface;
 use SmartAssert\YamlFile\YamlFile;
 use Symfony\Component\Yaml\Dumper as YamlDumper;
@@ -38,20 +38,13 @@ class JobSourceFactory
     /**
      * @throws InvalidManifestException
      */
-    public function createFromYamlFileCollection(ProviderInterface $provider): JobSource
+    public function createFromYamlFileCollection(ProviderInterface&MutableProviderInterface $provider): JobSource
     {
-        $sources = [];
-        $manifest = null;
+        $manifestYamlFile = $provider->extract(Manifest::FILENAME);
+        $manifest = $manifestYamlFile instanceof YamlFile ? $this->createManifest($manifestYamlFile) : null;
+        $manifestTestPaths = $manifest?->testPaths ?? [];
 
-        foreach ($provider->getYamlFiles() as $yamlFile) {
-            if (Manifest::FILENAME === (string) $yamlFile->name) {
-                $manifest = $this->createManifest($yamlFile);
-            } else {
-                $sources[] = $yamlFile;
-            }
-        }
-
-        return $this->createFromManifestPathsAndSources($manifest?->testPaths ?? [], new ArrayCollection($sources));
+        return $this->createFromManifestPathsAndSources($manifestTestPaths, $provider);
     }
 
     /**
