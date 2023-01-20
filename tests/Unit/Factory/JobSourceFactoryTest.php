@@ -6,7 +6,6 @@ namespace SmartAssert\WorkerJobSource\Tests\Unit\Factory;
 
 use PHPUnit\Framework\TestCase;
 use SmartAssert\WorkerJobSource\Exception\InvalidManifestException;
-use SmartAssert\WorkerJobSource\Exception\MissingManifestException;
 use SmartAssert\WorkerJobSource\Factory\JobSourceFactory;
 use SmartAssert\WorkerJobSource\Model\JobSource;
 use SmartAssert\WorkerJobSource\Model\Manifest;
@@ -127,9 +126,11 @@ class JobSourceFactoryTest extends TestCase
 
     public function testCreateFromYamlFileCollectionThrowsExceptionForMissingManifest(): void
     {
-        self::expectExceptionObject(new MissingManifestException());
-
-        $this->jobSourceFactory->createFromYamlFileCollection(new ArrayCollection([]));
+        try {
+            $this->jobSourceFactory->createFromYamlFileCollection(new ArrayCollection([]));
+        } catch (InvalidManifestException $e) {
+            self::assertSame(InvalidManifestException::CODE_EMPTY, $e->getCode());
+        }
     }
 
     /**

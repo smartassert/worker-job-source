@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SmartAssert\WorkerJobSource\Factory;
 
 use SmartAssert\WorkerJobSource\Exception\InvalidManifestException;
-use SmartAssert\WorkerJobSource\Exception\MissingManifestException;
 use SmartAssert\WorkerJobSource\Model\JobSource;
 use SmartAssert\WorkerJobSource\Model\Manifest;
 use SmartAssert\YamlFile\Collection\ArrayCollection;
@@ -37,7 +36,6 @@ class JobSourceFactory
     }
 
     /**
-     * @throws MissingManifestException
      * @throws InvalidManifestException
      */
     public function createFromYamlFileCollection(ProviderInterface $provider): JobSource
@@ -53,13 +51,7 @@ class JobSourceFactory
             }
         }
 
-        if (null === $manifest) {
-            throw new MissingManifestException();
-        }
-
-        $this->validateManifest($manifest);
-
-        return new JobSource($manifest, new ArrayCollection($sources));
+        return $this->createFromManifestPathsAndSources($manifest?->testPaths ?? [], new ArrayCollection($sources));
     }
 
     /**
