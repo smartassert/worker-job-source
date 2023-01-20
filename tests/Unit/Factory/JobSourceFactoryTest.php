@@ -10,7 +10,6 @@ use SmartAssert\WorkerJobSource\Factory\JobSourceFactory;
 use SmartAssert\WorkerJobSource\Model\JobSource;
 use SmartAssert\WorkerJobSource\Model\Manifest;
 use SmartAssert\YamlFile\Collection\ArrayCollection;
-use SmartAssert\YamlFile\Collection\MutableProviderInterface;
 use SmartAssert\YamlFile\Collection\ProviderInterface;
 use SmartAssert\YamlFile\YamlFile;
 use Symfony\Component\Yaml\Dumper as YamlDumper;
@@ -182,10 +181,8 @@ class JobSourceFactoryTest extends TestCase
     /**
      * @dataProvider createFromYamlFileCollectionSuccessDataProvider
      */
-    public function testCreateFromYamlFileCollectionSuccess(
-        ProviderInterface&MutableProviderInterface $provider,
-        JobSource $expected
-    ): void {
+    public function testCreateFromYamlFileCollectionSuccess(ProviderInterface $provider, JobSource $expected): void
+    {
         self::assertEquals($expected, $this->jobSourceFactory->createFromYamlFileCollection($provider));
     }
 
