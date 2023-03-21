@@ -8,6 +8,8 @@ use SmartAssert\WorkerJobSource\Factory\YamlFileFactory;
 use SmartAssert\WorkerJobSource\Model\JobSource;
 use SmartAssert\YamlFile\Collection\ArrayCollection;
 use SmartAssert\YamlFile\Collection\Serializer;
+use SmartAssert\YamlFile\Exception\Collection\SerializeException;
+use SmartAssert\YamlFile\Exception\ProvisionException;
 
 class JobSourceSerializer
 {
@@ -17,11 +19,19 @@ class JobSourceSerializer
     ) {
     }
 
+    /**
+     * @throws SerializeException
+     */
     public function serialize(JobSource $jobSource): string
     {
         $yamlFiles = [];
-        foreach ($jobSource->sources->getYamlFiles() as $yamlFile) {
-            $yamlFiles[] = $yamlFile;
+
+        try {
+            foreach ($jobSource->sources->getYamlFiles() as $yamlFile) {
+                $yamlFiles[] = $yamlFile;
+            }
+        } catch (ProvisionException $e) {
+            throw new SerializeException($e);
         }
 
         return $this->yamlFileCollectionSerializer->serialize(new ArrayCollection(array_merge(
