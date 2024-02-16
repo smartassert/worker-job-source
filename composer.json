@@ -34,7 +34,7 @@
     },
     "require": {
         "php": "^8.2",
-        "smartassert/yaml-file": "^6.0",
+        "smartassert/yaml-file": "^7.0",
         "symfony/yaml": "^6.4 || ^7.0"
     },
     "require-dev": {
