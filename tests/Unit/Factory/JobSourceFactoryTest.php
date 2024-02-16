@@ -76,7 +76,7 @@ class JobSourceFactoryTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function createFromManifestPathsAndSourcesSuccessDataProvider(): array
+    public static function createFromManifestPathsAndSourcesSuccessDataProvider(): array
     {
         return [
             'single-item manifest, no sources' => [
@@ -152,7 +152,7 @@ class JobSourceFactoryTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function createFromYamlFileCollectionThrowsExceptionForInvalidManifestDataProvider(): array
+    public static function createFromYamlFileCollectionThrowsExceptionForInvalidManifestDataProvider(): array
     {
         return [
             'empty' => [
@@ -189,7 +189,7 @@ class JobSourceFactoryTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function createFromYamlFileCollectionSuccessDataProvider(): array
+    public static function createFromYamlFileCollectionSuccessDataProvider(): array
     {
         return [
             'single-item manifest, no sources' => [
