@@ -67,7 +67,7 @@ class JobSourceSerializeDeserializeTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function serializeDataProvider(): array
+    public static function serializeDataProvider(): array
     {
         return [
             'non-empty manifest, no sources' => [
