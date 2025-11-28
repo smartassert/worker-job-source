@@ -34,8 +34,8 @@
     },
     "require": {
         "php": "^8.4",
-        "smartassert/yaml-file": "^8.0",
-        "symfony/yaml": "^6.4 || ^7.0"
+        "smartassert/yaml-file": "^9.0",
+        "symfony/yaml": "^6.4 || ^7.0 || ^8.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^12",
