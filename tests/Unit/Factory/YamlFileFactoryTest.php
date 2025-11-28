@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SmartAssert\WorkerJobSource\Tests\Unit\Factory;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SmartAssert\WorkerJobSource\Factory\YamlFileFactory;
 use SmartAssert\WorkerJobSource\Model\Manifest;
@@ -21,9 +22,7 @@ class YamlFileFactoryTest extends TestCase
         $this->yamlFileFactory = new YamlFileFactory(new YamlDumper());
     }
 
-    /**
-     * @dataProvider createDataProvider
-     */
+    #[DataProvider('createDataProvider')]
     public function testCreate(Manifest $manifest, YamlFile $expected): void
     {
         self::assertEquals($expected, $this->yamlFileFactory->createFromManifest($manifest));
