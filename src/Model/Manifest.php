@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SmartAssert\WorkerJobSource\Model;
 
+use SmartAssert\WorkerJobSource\Enum\ManifestValidityState;
+
 class Manifest
 {
     public const FILENAME = 'manifest.yaml';
@@ -20,31 +22,24 @@ class Manifest
         return in_array($path, $this->testPaths);
     }
 
-    public function isEmpty(): bool
+    public function validate(): ManifestValidityState
     {
-        $filteredPaths = [];
+        $isEmpty = true;
 
-        foreach ($this->testPaths as $testPath) {
-            if (is_string($testPath)) {
-                $filteredPath = trim($testPath);
-
-                if ('' !== $filteredPath) {
-                    $filteredPaths[] = $filteredPath;
-                }
-            }
-        }
-
-        return [] === $filteredPaths;
-    }
-
-    public function containsOnlyStrings(): bool
-    {
         foreach ($this->testPaths as $testPath) {
             if (!is_string($testPath)) {
-                return false;
+                return ManifestValidityState::INVALID_CONTENT;
+            }
+
+            if ('' !== trim($testPath)) {
+                $isEmpty = false;
             }
         }
 
-        return true;
+        if ($isEmpty) {
+            return ManifestValidityState::EMPTY;
+        }
+
+        return ManifestValidityState::VALID;
     }
 }
