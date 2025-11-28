@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SmartAssert\WorkerJobSource\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SmartAssert\WorkerJobSource\Factory\JobSourceFactory;
 use SmartAssert\WorkerJobSource\Factory\YamlFileFactory;
@@ -49,9 +50,7 @@ class JobSourceSerializeDeserializeTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider serializeDataProvider
-     */
+    #[DataProvider('serializeDataProvider')]
     public function testSerializeDeserialize(JobSource $jobSource): void
     {
         $serialized = $this->jobSourceSerializer->serialize($jobSource);

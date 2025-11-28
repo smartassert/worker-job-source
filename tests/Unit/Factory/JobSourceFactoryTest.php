@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SmartAssert\WorkerJobSource\Tests\Unit\Factory;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SmartAssert\WorkerJobSource\Exception\InvalidManifestException;
 use SmartAssert\WorkerJobSource\Factory\JobSourceFactory;
@@ -58,10 +59,9 @@ class JobSourceFactoryTest extends TestCase
     }
 
     /**
-     * @dataProvider createFromManifestPathsAndSourcesSuccessDataProvider
-     *
      * @param non-empty-string[] $manifestPaths
      */
+    #[DataProvider('createFromManifestPathsAndSourcesSuccessDataProvider')]
     public function testCreateFromManifestPathsAndSourcesSuccess(
         array $manifestPaths,
         ProviderInterface $sources,
@@ -132,9 +132,7 @@ class JobSourceFactoryTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider createFromYamlFileCollectionThrowsExceptionForInvalidManifestDataProvider
-     */
+    #[DataProvider('createFromYamlFileCollectionThrowsExceptionForInvalidManifestDataProvider')]
     public function testCreateFromYamlFileCollectionThrowsExceptionForInvalidManifest(
         string $manifestContent,
         int $expectedCode,
@@ -178,9 +176,7 @@ class JobSourceFactoryTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider createFromYamlFileCollectionSuccessDataProvider
-     */
+    #[DataProvider('createFromYamlFileCollectionSuccessDataProvider')]
     public function testCreateFromYamlFileCollectionSuccess(ProviderInterface $provider, JobSource $expected): void
     {
         self::assertEquals($expected, $this->jobSourceFactory->createFromYamlFileCollection($provider));
