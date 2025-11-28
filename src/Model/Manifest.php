@@ -24,42 +24,22 @@ class Manifest
 
     public function validate(): ManifestValidityState
     {
-        if ($this->isEmpty()) {
+        $isEmpty = true;
+
+        foreach ($this->testPaths as $testPath) {
+            if (!is_string($testPath)) {
+                return ManifestValidityState::INVALID_CONTENT;
+            }
+
+            if ('' !== trim($testPath)) {
+                $isEmpty = false;
+            }
+        }
+
+        if ($isEmpty) {
             return ManifestValidityState::EMPTY;
         }
 
-        if (!$this->containsOnlyStrings()) {
-            return ManifestValidityState::INVALID_CONTENT;
-        }
-
         return ManifestValidityState::VALID;
-    }
-
-    public function isEmpty(): bool
-    {
-        $filteredPaths = [];
-
-        foreach ($this->testPaths as $testPath) {
-            if (is_string($testPath)) {
-                $filteredPath = trim($testPath);
-
-                if ('' !== $filteredPath) {
-                    $filteredPaths[] = $filteredPath;
-                }
-            }
-        }
-
-        return [] === $filteredPaths;
-    }
-
-    public function containsOnlyStrings(): bool
-    {
-        foreach ($this->testPaths as $testPath) {
-            if (!is_string($testPath)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }
