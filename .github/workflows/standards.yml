@@ -30,7 +30,7 @@ jobs:
         run: composer cs-fixer-dry-run
 
   phpcs:
-    name: PHPCS - PHP ${{ matrix.php }}
+    name: PHPCS - PHP ${{ matrix.php }} Symfony ${{ matrix.symfony }}
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
