@@ -15,8 +15,7 @@ class JobSourceDeserializer
     public function __construct(
         private readonly Deserializer $yamlFileCollectionDeserializer,
         private readonly JobSourceFactory $jobSourceFactory,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws InvalidManifestException

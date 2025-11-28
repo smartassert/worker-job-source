@@ -19,8 +19,7 @@ class JobSourceFactory
     public function __construct(
         private readonly YamlDumper $yamlDumper,
         private readonly YamlParser $yamlParser,
-    ) {
-    }
+    ) {}
 
     /**
      * @param non-empty-string[] $manifestPaths

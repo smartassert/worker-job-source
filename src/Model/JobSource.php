@@ -11,6 +11,5 @@ class JobSource
     public function __construct(
         public readonly Manifest $manifest,
         public readonly ProviderInterface $sources,
-    ) {
-    }
+    ) {}
 }

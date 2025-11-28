@@ -12,8 +12,7 @@ class YamlFileFactory
 {
     public function __construct(
         private readonly YamlDumper $yamlDumper,
-    ) {
-    }
+    ) {}
 
     public function createFromManifest(Manifest $manifest): YamlFile
     {
