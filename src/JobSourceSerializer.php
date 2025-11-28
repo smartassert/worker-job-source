@@ -16,8 +16,7 @@ class JobSourceSerializer
     public function __construct(
         private readonly Serializer $yamlFileCollectionSerializer,
         private readonly YamlFileFactory $yamlFileFactory,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws SerializeException
@@ -36,7 +35,7 @@ class JobSourceSerializer
 
         return $this->yamlFileCollectionSerializer->serialize(new ArrayCollection(array_merge(
             [
-                $this->yamlFileFactory->createFromManifest($jobSource->manifest)
+                $this->yamlFileFactory->createFromManifest($jobSource->manifest),
             ],
             $yamlFiles,
         )));

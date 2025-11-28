@@ -13,8 +13,7 @@ class Manifest
      */
     public function __construct(
         public readonly array $testPaths,
-    ) {
-    }
+    ) {}
 
     public function contains(string $path): bool
     {

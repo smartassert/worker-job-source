@@ -194,7 +194,7 @@ class JobSourceFactoryTest extends TestCase
         return [
             'single-item manifest, no sources' => [
                 'provider' => new ArrayCollection([
-                    YamlFile::create('manifest.yaml', '- Test/test1.yml')
+                    YamlFile::create('manifest.yaml', '- Test/test1.yml'),
                 ]),
                 'expected' => new JobSource(
                     new Manifest(['Test/test1.yml']),
