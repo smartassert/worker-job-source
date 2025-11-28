@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SmartAssert\WorkerJobSource\Factory;
 
+use SmartAssert\WorkerJobSource\Enum\ManifestValidityState;
 use SmartAssert\WorkerJobSource\Exception\InvalidManifestException;
 use SmartAssert\WorkerJobSource\Model\JobSource;
 use SmartAssert\WorkerJobSource\Model\Manifest;
@@ -31,7 +32,17 @@ class JobSourceFactory
         ProviderInterface $sources
     ): JobSource {
         $manifest = new Manifest($manifestPaths);
-        $this->validateManifest($manifest);
+        $validityState = $manifest->validate();
+
+        if (ManifestValidityState::VALID !== $validityState) {
+            if (ManifestValidityState::EMPTY === $validityState) {
+                throw InvalidManifestException::createForEmptyContent();
+            }
+
+            throw InvalidManifestException::createForInvalidData(
+                trim($this->yamlDumper->dump($manifestPaths, 1))
+            );
+        }
 
         return new JobSource($manifest, $sources);
     }
@@ -77,24 +88,5 @@ class JobSourceFactory
         }
 
         return new Manifest($data);
-    }
-
-    /**
-     * @throws InvalidManifestException
-     */
-    private function validateManifest(Manifest $manifest): void
-    {
-        if ($manifest->isEmpty()) {
-            throw InvalidManifestException::createForEmptyContent();
-        }
-
-        if (!$manifest->containsOnlyStrings()) {
-            $invalidContent = trim($this->yamlDumper->dump(
-                $manifest->testPaths,
-                1
-            ));
-
-            throw InvalidManifestException::createForInvalidData($invalidContent);
-        }
     }
 }
