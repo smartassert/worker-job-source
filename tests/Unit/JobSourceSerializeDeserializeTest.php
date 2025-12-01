@@ -12,6 +12,7 @@ use SmartAssert\WorkerJobSource\JobSourceDeserializer;
 use SmartAssert\WorkerJobSource\JobSourceSerializer;
 use SmartAssert\WorkerJobSource\Model\JobSource;
 use SmartAssert\WorkerJobSource\Model\Manifest;
+use SmartAssert\WorkerJobSource\Validator\ManifestContentValidator;
 use SmartAssert\YamlFile\Collection\ArrayCollection;
 use SmartAssert\YamlFile\Collection\Deserializer as YamlFileCollectionDeserializer;
 use SmartAssert\YamlFile\Collection\Serializer as YamlFileCollectionSerializer;
@@ -46,7 +47,7 @@ class JobSourceSerializeDeserializeTest extends TestCase
                 new DocumentSetParser(),
                 new FileHashesDeserializer($yamlParser),
             ),
-            new JobSourceFactory($yamlDumper, $yamlParser),
+            new JobSourceFactory(new ManifestContentValidator($yamlParser)),
         );
     }
 

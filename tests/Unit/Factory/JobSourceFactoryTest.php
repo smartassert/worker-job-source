@@ -10,10 +10,10 @@ use SmartAssert\WorkerJobSource\Exception\InvalidManifestException;
 use SmartAssert\WorkerJobSource\Factory\JobSourceFactory;
 use SmartAssert\WorkerJobSource\Model\JobSource;
 use SmartAssert\WorkerJobSource\Model\Manifest;
+use SmartAssert\WorkerJobSource\Validator\ManifestContentValidator;
 use SmartAssert\YamlFile\Collection\ArrayCollection;
 use SmartAssert\YamlFile\Collection\ProviderInterface;
 use SmartAssert\YamlFile\YamlFile;
-use Symfony\Component\Yaml\Dumper as YamlDumper;
 use Symfony\Component\Yaml\Parser as YamlParser;
 
 class JobSourceFactoryTest extends TestCase
@@ -24,7 +24,11 @@ class JobSourceFactoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->jobSourceFactory = new JobSourceFactory(new YamlDumper(), new YamlParser());
+        $this->jobSourceFactory = new JobSourceFactory(
+            new ManifestContentValidator(
+                new YamlParser(),
+            ),
+        );
     }
 
     public function testCreateFromYamlFileCollectionThrowsExceptionForMissingManifest(): void
