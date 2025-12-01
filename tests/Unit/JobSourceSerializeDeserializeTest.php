@@ -55,8 +55,6 @@ class JobSourceSerializeDeserializeTest extends TestCase
     public function testSerializeDeserialize(JobSource $jobSource): void
     {
         $serialized = $this->jobSourceSerializer->serialize($jobSource);
-
-        self::assertIsString($serialized);
         self::assertNotSame('', trim($serialized));
 
         $deserialized = $this->jobSourceDeserializer->deserialize($serialized);
