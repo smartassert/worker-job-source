@@ -38,21 +38,10 @@ class JobSourceFactory
         }
 
         $manifest = $manifestYamlFile instanceof YamlFile ? $this->createManifest($manifestYamlFile) : null;
-        $manifestTestPaths = $manifest?->testPaths ?? [];
+        if (null === $manifest) {
+            throw InvalidManifestException::createForEmptyContent();
+        }
 
-        return $this->createFromManifestPathsAndSources($manifestTestPaths, new ArrayCollection($sources));
-    }
-
-    /**
-     * @param non-empty-string[] $manifestPaths
-     *
-     * @throws InvalidManifestException
-     */
-    private function createFromManifestPathsAndSources(
-        array $manifestPaths,
-        ProviderInterface $sources
-    ): JobSource {
-        $manifest = new Manifest($manifestPaths);
         $validityState = $manifest->validate();
 
         if (ManifestValidityState::VALID !== $validityState) {
@@ -61,11 +50,11 @@ class JobSourceFactory
             }
 
             throw InvalidManifestException::createForInvalidData(
-                trim($this->yamlDumper->dump($manifestPaths, 1))
+                trim($this->yamlDumper->dump($manifest->testPaths, 1))
             );
         }
 
-        return new JobSource($manifest, $sources);
+        return new JobSource($manifest, new ArrayCollection($sources));
     }
 
     /**
