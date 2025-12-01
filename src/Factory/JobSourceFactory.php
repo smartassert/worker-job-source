@@ -32,7 +32,7 @@ class JobSourceFactory
             }
         }
 
-        $testPaths = $this->manifestContentValidator->validate($manifestYamlFile?->content ?? '');
+        $testPaths = $this->manifestContentValidator->validate($manifestYamlFile->content ?? '');
 
         return new JobSource(new Manifest($testPaths), new ArrayCollection($sources));
     }
