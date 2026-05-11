@@ -42,7 +42,7 @@
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-phpunit": "^2.0",
-        "phpunit/phpunit": "^12",
+        "phpunit/phpunit": "^13.1",
         "squizlabs/php_codesniffer": "^4.0"
     },
     "minimum-stability":"stable",
