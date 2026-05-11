@@ -44,6 +44,10 @@ readonly class ManifestContentValidator
             $filteredTestPaths[] = $testPath;
         }
 
+        if ([] === $filteredTestPaths) {
+            throw InvalidManifestException::createForEmptyTestPathCollection($content);
+        }
+
         return $filteredTestPaths;
     }
 }

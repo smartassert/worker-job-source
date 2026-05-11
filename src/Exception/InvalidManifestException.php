@@ -9,9 +9,11 @@ use Symfony\Component\Yaml\Exception\ParseException;
 
 class InvalidManifestException extends \Exception
 {
-    public const CODE_INVALID_YAML = 100;
-    public const CODE_INVALID_DATA = 200;
-    public const CODE_EMPTY = 300;
+    public const int CODE_INVALID_YAML = 100;
+    public const int CODE_INVALID_DATA = 200;
+    public const int CODE_EMPTY = 300;
+
+    public const int CODE_EMPTY_TEST_PATH_COLLECTION = 400;
 
     public function __construct(
         public readonly string $content = '',
@@ -47,6 +49,15 @@ class InvalidManifestException extends \Exception
             '',
             Manifest::FILENAME . ' is empty.',
             self::CODE_EMPTY
+        );
+    }
+
+    public static function createForEmptyTestPathCollection(string $content): self
+    {
+        return new InvalidManifestException(
+            $content,
+            Manifest::FILENAME . ' represents an empty collection.',
+            self::CODE_EMPTY_TEST_PATH_COLLECTION
         );
     }
 }
