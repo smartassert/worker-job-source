@@ -40,7 +40,7 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.90",
         "phpstan/extension-installer": "^1.4",
-        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan": "^2.2",
         "phpstan/phpstan-phpunit": "^2.0",
         "phpunit/phpunit": "^13.1",
         "squizlabs/php_codesniffer": "^4.0"
