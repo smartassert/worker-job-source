@@ -35,7 +35,7 @@
     "require": {
         "php": "^8.4",
         "smartassert/yaml-file": "^9.0",
-        "symfony/yaml": "8.0.13"
+        "symfony/yaml": "8.1.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.95",
