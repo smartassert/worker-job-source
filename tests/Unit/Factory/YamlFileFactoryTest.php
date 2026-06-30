@@ -36,7 +36,7 @@ class YamlFileFactoryTest extends TestCase
         return [
             'empty' => [
                 'manifest' => new Manifest([]),
-                'expected' => YamlFile::create(Manifest::FILENAME, '{  }'),
+                'expected' => YamlFile::create(Manifest::FILENAME, '{}'),
             ],
             'single item' => [
                 'manifest' => new Manifest([
